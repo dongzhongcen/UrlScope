@@ -44,7 +44,7 @@ npm run worker:deploy
 ```
 
 2. 复制 Worker 的线上地址。
-3. 在 Cloudflare Pages 项目里添加环境变量：
+3. 在 Cloudflare Pages 项目里添加环境变量。这个变量是必填的，否则 `/api/check` 会返回 `Server proxy is not configured.`：
 
 ```text
 URLSCOPE_WORKER_API_BASE=https://你的-worker.workers.dev

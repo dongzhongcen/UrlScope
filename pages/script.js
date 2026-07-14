@@ -17,7 +17,7 @@ form.addEventListener("submit", async (event) => {
 
   const rawUrl = input.value.trim();
   if (!rawUrl) {
-    renderError("请输入要查询的网址。");
+    renderError("Please enter a target URL.");
     return;
   }
 
@@ -31,10 +31,10 @@ form.addEventListener("submit", async (event) => {
     const response = await fetch(endpoint.toString(), {
       headers: { Accept: "application/json" }
     });
-    const payload = await response.json();
+    const payload = await readJsonResponse(response);
 
     if (!response.ok) {
-      throw new Error(payload.error || "查询失败，请稍后再试。");
+      throw new Error(payload.error || payload.detail || "Query failed.");
     }
 
     renderResult(payload);
@@ -44,6 +44,25 @@ form.addEventListener("submit", async (event) => {
     setLoading(false);
   }
 });
+
+async function readJsonResponse(response) {
+  const text = await response.text();
+
+  if (!text.trim()) {
+    return {
+      error: `Empty response from /api/check. HTTP ${response.status}.`
+    };
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {
+      error: "Non-JSON response from /api/check.",
+      detail: text.slice(0, 240)
+    };
+  }
+}
 
 function bootMotion() {
   gsap.from(".topbar", {
@@ -100,12 +119,12 @@ function bootMotion() {
 
 function setLoading(isLoading) {
   submitButton.disabled = isLoading;
-  submitButton.lastChild.textContent = isLoading ? "查询中" : "查询";
+  submitButton.lastChild.textContent = isLoading ? "Querying" : "查询";
 }
 
 function renderLoading() {
   resultArea.innerHTML = `
-    <div class="skeleton" aria-label="正在加载">
+    <div class="skeleton" aria-label="Loading">
       <div class="skeleton-line short"></div>
       <div class="skeleton-line"></div>
       <div class="skeleton-block"></div>
@@ -126,18 +145,18 @@ function renderError(message) {
 
 function renderResult(data) {
   const metrics = [
-    ["状态码", data.status ?? "未返回"],
-    ["耗时", data.timingMs ? `${data.timingMs} ms` : "未知"],
-    ["服务器", data.headers?.server || "未公开"],
-    ["内容类型", data.headers?.contentType || "未知"]
+    ["Status", data.status ?? "No response"],
+    ["Latency", data.timingMs ? `${data.timingMs} ms` : "Unknown"],
+    ["Server", data.headers?.server || "Hidden"],
+    ["Content-Type", data.headers?.contentType || "Unknown"]
   ];
 
   const details = [
-    ["页面标题", data.title || "未检测到"],
-    ["最终地址", data.finalUrl || data.url],
-    ["重定向", data.redirected ? "是" : "否"],
-    ["DNS A 记录", formatDns(data.dns?.A)],
-    ["DNS AAAA 记录", formatDns(data.dns?.AAAA)]
+    ["Title", data.title || "Not detected"],
+    ["Final URL", data.finalUrl || data.url],
+    ["Redirected", data.redirected ? "Yes" : "No"],
+    ["DNS A", formatDns(data.dns?.A)],
+    ["DNS AAAA", formatDns(data.dns?.AAAA)]
   ];
 
   resultArea.innerHTML = `
@@ -177,7 +196,7 @@ function renderResult(data) {
 
 function formatDns(records = []) {
   if (!records.length) {
-    return "未查询到";
+    return "No records";
   }
 
   return records.map((record) => record.data).join(", ");
