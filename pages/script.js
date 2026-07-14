@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE = "https://urlscope-api.your-subdomain.workers.dev";
+const DEFAULT_API_BASE = "https://urlscope-api.xiangdongshe565.workers.dev";
 const apiBase = localStorage.getItem("urlscope_api_base") || DEFAULT_API_BASE;
 
 const form = document.querySelector("#check-form");
