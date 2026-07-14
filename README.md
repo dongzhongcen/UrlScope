@@ -25,11 +25,14 @@ npm run worker:dev
 npm run pages:preview
 ```
 
-默认前端会请求 `https://urlscope-api.your-subdomain.workers.dev`。本地测试时，可以在浏览器控制台设置：
+前端默认只请求同域接口 `/api/check`，由 Cloudflare Pages Functions 代理到 Worker。
 
-```js
-localStorage.setItem("urlscope_api_base", "http://127.0.0.1:8787");
-location.reload();
+如果本地只打开 `pages/index.html`，不会有 Pages Functions 代理；需要用 Cloudflare Pages 预览或线上环境测试完整链路。
+
+Pages Functions 的代理文件在：
+
+```text
+functions/api/check.js
 ```
 
 ## 部署顺序
@@ -41,7 +44,12 @@ npm run worker:deploy
 ```
 
 2. 复制 Worker 的线上地址。
-3. 修改 `pages/script.js` 里的 `DEFAULT_API_BASE`。
+3. 在 Cloudflare Pages 项目里添加环境变量：
+
+```text
+URLSCOPE_WORKER_API_BASE=https://你的-worker.workers.dev
+```
+
 4. 再部署 Pages：
 
 ```bash

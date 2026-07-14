@@ -11,29 +11,57 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="grain" aria-hidden="true"></div>
     <main class="shell">
+      <nav class="topbar" aria-label="主导航">
+        <a class="brand" href="./" aria-label="UrlScope 首页">
+          <span class="brand-mark"></span>
+          UrlScope
+        </a>
+        <div class="nav-readout" aria-hidden="true">
+          <span>EDGE_SCAN</span>
+          <span>HTTP_DNS_TLS</span>
+          <span>NO_PUBLIC_API</span>
+        </div>
+      </nav>
+
       <section class="hero" aria-labelledby="page-title">
         <div class="hero-copy">
-          <p class="eyebrow">HTTP / DNS / Headers</p>
-          <h1 id="page-title">UrlScope</h1>
+          <p class="eyebrow">LIVE TARGET INTELLIGENCE</p>
+          <h1 id="page-title">
+            Probe hostile-looking URLs without exposing the control channel.
+          </h1>
           <p class="lede">
-            输入一个网址，Worker 会从边缘节点发起探测，并把网站状态整理成可读结果。
+            输入目标网址，边缘函数会代理查询链路，只把整理后的站点画像返回到界面。
           </p>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <img src="./assets/inspect-diagram.svg" alt="" />
+        <div class="hero-terminal" aria-hidden="true">
+          <div class="terminal-head">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>trace --target example.com
+resolve A AAAA
+follow redirects
+extract title
+return sanitized profile</code></pre>
         </div>
       </section>
 
       <section class="workspace" aria-label="网站查询工具">
-        <form class="query-panel" id="check-form">
+        <form class="query-panel stack-card" id="check-form">
+          <div class="panel-header">
+            <span class="panel-index">INPUT</span>
+            <strong>Target Vector</strong>
+          </div>
           <div class="field">
             <label for="target-url">目标网址</label>
             <input
@@ -60,24 +88,52 @@
           </button>
         </form>
 
-        <aside class="api-note" id="api-note">
-          <span class="status-dot"></span>
-          <div>
-            <strong>API 地址</strong>
-            <p id="api-base-label"></p>
-          </div>
-        </aside>
-
-        <section class="result-area" id="result-area" aria-live="polite">
+        <section class="result-area stack-card" id="result-area" aria-live="polite">
           <div class="empty-state">
-            <p class="empty-kicker">等待输入</p>
+            <p class="empty-kicker">AWAITING SIGNAL</p>
             <h2>结果会显示在这里</h2>
             <p>状态码、页面标题、服务器、内容类型、重定向和 DNS 摘要会分组展示。</p>
           </div>
         </section>
+
+        <div class="signal-strip" aria-hidden="true">
+          <span>STATUS</span>
+          <span>HEADERS</span>
+          <span>DNS A</span>
+          <span>DNS AAAA</span>
+          <span>REDIRECTS</span>
+          <span>TITLE</span>
+          <span>EDGE PROXY</span>
+          <span>CORS SEALED</span>
+        </div>
       </section>
+
+      <section class="desire-grid" aria-label="探测能力">
+        <article class="accord active">
+          <span>HTTP</span>
+          <p>状态码、重定向链、内容类型和服务端响应摘要。</p>
+        </article>
+        <article class="accord">
+          <span>DNS</span>
+          <p>A 与 AAAA 记录通过可信解析器汇总。</p>
+        </article>
+        <article class="accord">
+          <span>TITLE</span>
+          <p>只读取有限 HTML 片段，提取页面标题并截断输出。</p>
+        </article>
+        <article class="accord">
+          <span>PROXY</span>
+          <p>前端只请求同域接口，Worker 地址不在页面展示。</p>
+        </article>
+      </section>
+
+      <footer class="footer-cta">
+        <p>UrlScope is online. Route the signal, not the secret.</p>
+      </footer>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
     <script src="./script.js" defer></script>
   </body>
 </html>

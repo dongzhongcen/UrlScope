@@ -1,13 +1,16 @@
-const DEFAULT_API_BASE = "https://urlscope-api.xiangdongshe565.workers.dev";
-const apiBase = localStorage.getItem("urlscope_api_base") || DEFAULT_API_BASE;
+const apiBase = window.location.origin;
 
 const form = document.querySelector("#check-form");
 const input = document.querySelector("#target-url");
 const resultArea = document.querySelector("#result-area");
-const apiLabel = document.querySelector("#api-base-label");
 const submitButton = form.querySelector("button[type='submit']");
 
-apiLabel.textContent = apiBase;
+window.addEventListener("load", () => {
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    bootMotion();
+  }
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -41,6 +44,59 @@ form.addEventListener("submit", async (event) => {
     setLoading(false);
   }
 });
+
+function bootMotion() {
+  gsap.from(".topbar", {
+    y: -24,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power3.out"
+  });
+
+  gsap.from(".hero-copy > *", {
+    y: 36,
+    opacity: 0,
+    duration: 0.9,
+    stagger: 0.08,
+    ease: "power3.out"
+  });
+
+  gsap.from(".hero-terminal", {
+    scale: 0.86,
+    opacity: 0,
+    duration: 1.1,
+    ease: "power3.out"
+  });
+
+  gsap.utils.toArray(".stack-card").forEach((card, index) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 82%",
+        end: "bottom 40%",
+        scrub: true
+      },
+      y: 80 + index * 22,
+      scale: 0.92,
+      opacity: 0.35,
+      ease: "none"
+    });
+  });
+
+  gsap.utils.toArray(".accord").forEach((card) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 92%",
+        end: "bottom 56%",
+        scrub: true
+      },
+      opacity: 0.2,
+      scale: 0.84,
+      ease: "none"
+    });
+  });
+}
 
 function setLoading(isLoading) {
   submitButton.disabled = isLoading;
@@ -86,7 +142,7 @@ function renderResult(data) {
 
   resultArea.innerHTML = `
     <div class="result-header">
-      <p class="eyebrow">查询结果</p>
+      <p class="eyebrow">QUERY RESULT</p>
       <h2>${escapeHtml(data.hostname || data.url)}</h2>
       <p class="result-url">${escapeHtml(data.url)}</p>
     </div>
