@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">UrlScope inspection diagram</title>
+  <desc id="desc">A structured diagram showing a URL flowing through HTTP, DNS, headers, and response checks.</desc>
+  <rect width="640" height="480" fill="#f4f6f1"/>
+  <path d="M0 120h640M0 240h640M0 360h640M160 0v480M320 0v480M480 0v480" stroke="#dce2d6" stroke-width="1"/>
+  <rect x="54" y="64" width="238" height="82" fill="#ffffff" stroke="#1d211c" stroke-opacity=".16"/>
+  <rect x="348" y="64" width="238" height="82" fill="#ffffff" stroke="#1d211c" stroke-opacity=".16"/>
+  <rect x="54" y="202" width="238" height="82" fill="#ffffff" stroke="#1d211c" stroke-opacity=".16"/>
+  <rect x="348" y="202" width="238" height="82" fill="#ffffff" stroke="#1d211c" stroke-opacity=".16"/>
+  <rect x="158" y="340" width="324" height="76" fill="#2f6f5f"/>
+  <path d="M292 105h56M173 146v56M467 146v56M292 244h56M320 284v56" fill="none" stroke="#2f6f5f" stroke-width="3"/>
+  <circle cx="173" cy="105" r="19" fill="#c3533d"/>
+  <circle cx="467" cy="105" r="19" fill="#2f6f5f"/>
+  <circle cx="173" cy="243" r="19" fill="#2f6f5f"/>
+  <circle cx="467" cy="243" r="19" fill="#c3533d"/>
+  <g fill="#1d211c" font-family="Geist, Arial, sans-serif" font-weight="700">
+    <text x="112" y="111" font-size="20">URL</text>
+    <text x="404" y="111" font-size="20">HTTP</text>
+    <text x="112" y="249" font-size="20">DNS</text>
+    <text x="401" y="249" font-size="20">HEADERS</text>
+  </g>
+  <g fill="#697063" font-family="Geist Mono, Consolas, monospace" font-size="13">
+    <text x="112" y="132">normalize input</text>
+    <text x="404" y="132">status + title</text>
+    <text x="112" y="270">A / AAAA records</text>
+    <text x="404" y="270">server + type</text>
+  </g>
+  <text x="214" y="386" fill="#fff" font-family="Geist, Arial, sans-serif" font-size="24" font-weight="700">Readable site profile</text>
+  <text x="214" y="405" fill="#d9ebe5" font-family="Geist Mono, Consolas, monospace" font-size="13">JSON returned from Worker API</text>
+</svg>

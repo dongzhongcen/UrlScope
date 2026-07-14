@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UrlScope 网站探测</title>
+    <meta
+      name="description"
+      content="输入网址，快速查看 HTTP 状态、响应头、DNS 和页面标题。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">HTTP / DNS / Headers</p>
+          <h1 id="page-title">UrlScope</h1>
+          <p class="lede">
+            输入一个网址，Worker 会从边缘节点发起探测，并把网站状态整理成可读结果。
+          </p>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <img src="./assets/inspect-diagram.svg" alt="" />
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="网站查询工具">
+        <form class="query-panel" id="check-form">
+          <div class="field">
+            <label for="target-url">目标网址</label>
+            <input
+              id="target-url"
+              name="url"
+              type="url"
+              inputmode="url"
+              autocomplete="url"
+              placeholder="https://example.com"
+              required
+            />
+            <p class="hint">支持 http 和 https；不写协议时会自动补全 https。</p>
+          </div>
+
+          <button class="submit-button" type="submit">
+            <span class="button-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img">
+                <path d="M10.8 5.2a5.6 5.6 0 1 0 0 11.2 5.6 5.6 0 0 0 0-11.2Z" />
+                <path d="m15 15 4.2 4.2" />
+                <path d="M8.6 10.8h4.4" />
+              </svg>
+            </span>
+            查询
+          </button>
+        </form>
+
+        <aside class="api-note" id="api-note">
+          <span class="status-dot"></span>
+          <div>
+            <strong>API 地址</strong>
+            <p id="api-base-label"></p>
+          </div>
+        </aside>
+
+        <section class="result-area" id="result-area" aria-live="polite">
+          <div class="empty-state">
+            <p class="empty-kicker">等待输入</p>
+            <h2>结果会显示在这里</h2>
+            <p>状态码、页面标题、服务器、内容类型、重定向和 DNS 摘要会分组展示。</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
